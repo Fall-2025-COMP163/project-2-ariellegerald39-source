@@ -163,7 +163,7 @@ class Player(Character):
         
 
 class Warrior(Player):
-     def __init__(self, name):
+    def __init__(self, name):
         Player.__init__(self, name, "Warrior", 120, 15, 5)
         
     
@@ -178,12 +178,11 @@ class Warrior(Player):
         # TODO: Call super().__init__() with warrior-appropriate stats
         # Suggested stats: health=120, strength=15, magic=5
         
-        
-def attack(self, target):
-         damage = self.strength + 5
-         print(self.name + " swings at " + target.name + " for " + str(damage) + " damage!")
-         target.take_damage(damage)
-"""
+    def attack(self, target):
+        damage = self.strength + 5
+        print(self.name + " swings at " + target.name + " for " + str(damage) + " damage!")
+        target.take_damage(damage)
+        """
         Override the basic attack to make it warrior-specific.
         Warriors should do extra physical damage.
         """
@@ -192,7 +191,7 @@ def attack(self, target):
         # Maybe strength + 5 bonus damage?
         
         
-def power_strike(self, target):
+    def power_strike(self, target):
         damage = self.strength * 2
         print(self.name + " uses Power Strike on " + target.name + " for " + str(damage) + " damage!")
         target.take_damage(damage)
@@ -204,8 +203,7 @@ def power_strike(self, target):
         
 
 class Mage(Player):
-    def __init__(self, name):
-        Player.__init__(self, name, "Mage", 80, 8, 20)
+    
     """
     Mage class - magical spellcaster.
     Inherits from Player.
@@ -216,7 +214,9 @@ class Mage(Player):
         """
         # TODO: Call super().__init__() with mage-appropriate stats
         # Suggested stats: health=80, strength=8, magic=20
-        
+
+    def __init__(self, name):
+        Player.__init__(self, name, "Mage", 80, 8, 20)     
         
     def attack(self, target):
         damage = self.magic
