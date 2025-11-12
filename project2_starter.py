@@ -15,7 +15,7 @@ class SimpleBattle:
     """
     Simple battle system provided for you to test your characters.
     DO NOT MODIFY THIS CLASS - just use it to test your character implementations.
-    """
+"""
     
     def __init__(self, character1, character2):
         self.char1 = character1
@@ -165,7 +165,16 @@ class Player(Character):
 class Warrior(Player):
     def __init__(self, name):
         Player.__init__(self, name, "Warrior", 120, 15, 5)
-        
+
+    def attack(self, target):
+        damage = self.strength + 5
+        print(self.name + " swings at " + target.name + " for " + str(damage) + " damage!")
+        target.take_damage(damage)
+
+    def power_strike(self, target):
+        damage = self.strength * 2
+        print(self.name + " uses Power Strike on " + target.name + " for " + str(damage) + " damage!")
+        target.take_damage(damage)
     
 """
     Warrior class - strong physical fighter.
@@ -178,11 +187,8 @@ class Warrior(Player):
         # TODO: Call super().__init__() with warrior-appropriate stats
         # Suggested stats: health=120, strength=15, magic=5
         
-    def attack(self, target):
-        damage = self.strength + 5
-        print(self.name + " swings at " + target.name + " for " + str(damage) + " damage!")
-        target.take_damage(damage)
-        """
+    
+"""
         Override the basic attack to make it warrior-specific.
         Warriors should do extra physical damage.
         """
@@ -191,11 +197,8 @@ class Warrior(Player):
         # Maybe strength + 5 bonus damage?
         
         
-    def power_strike(self, target):
-        damage = self.strength * 2
-        print(self.name + " uses Power Strike on " + target.name + " for " + str(damage) + " damage!")
-        target.take_damage(damage)
-        """
+    
+"""
         Special warrior ability - a powerful attack that does extra damage.
         """
         # TODO: Implement power strike
@@ -274,9 +277,9 @@ class Rogue(Player):
         damage = self.strength * 2
         print(self.name + " performs a Sneak Attack on " + target.name + " for " + str(damage) + " damage!")
         target.take_damage(damage)
-        """
+"""
         Special rogue ability - guaranteed critical hit.
-        """
+"""
         # TODO: Implement sneak attack
         # Should always do critical damage
         
