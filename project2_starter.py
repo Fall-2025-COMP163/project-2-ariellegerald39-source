@@ -167,14 +167,14 @@ class Warrior(Player):
         Player.__init__(self, name, "Warrior", 120, 15, 5)
         
     
-    """
+"""
     Warrior class - strong physical fighter.
     Inherits from Player.
     """
     
 def __init__(self, name):
          Player.__init__(self, name, "Mage", 80, 8, 20)
-        """
+"""
         Create a warrior with appropriate stats.
         Warriors should have: high health, high strength, low magic
         """
@@ -186,7 +186,7 @@ def attack(self, target):
          damage = self.strength + 5
          print(self.name + " swings at " + target.name + " for " + str(damage) + " damage!")
          target.take_damage(damage)
-        """
+"""
         Override the basic attack to make it warrior-specific.
         Warriors should do extra physical damage.
         """
@@ -216,7 +216,7 @@ class Mage(Player):
     
     def __init__(self, name):
          Player.__init__(self, name, "Rogue", 90, 12, 10)
-        """
+    """
         Create a mage with appropriate stats.
         Mages should have: low health, low strength, high magic
         """
