@@ -124,6 +124,11 @@ class Player(Character):
     """
     
     def __init__(self, name, character_class, health, strength, magic):
+        Character.__init__(self, name, health, strength, magic)
+        self.character_class = character_class
+        self.level = 1
+        self.experience = 0
+        self.weapon = None
 
         """
         Initialize a player character.
@@ -132,7 +137,7 @@ class Player(Character):
         # TODO: Call super().__init__() with the basic character info
         # TODO: Store the character_class (like "Warrior", "Mage", etc.)
         # TODO: Add any other player-specific attributes (level, experience, etc.)
-        pass
+        
         
     def display_stats(self):
         print("=== " + self.character_class + " ===")
@@ -143,6 +148,19 @@ class Player(Character):
             print("Equipped Weapon:", self.weapon.name, "(+" + str(self.weapon.damage_bonus) + ")")
         else:
             print("No weapon equipped.")
+
+    def equip_weapon(self, weapon):
+        """Equip a weapon."""
+        self.weapon = weapon
+        print(self.name + " equipped " + weapon.name + "!")
+        
+    def attack(self, target):
+        """Attack that includes weapon bonus if equipped."""
+        damage = self.strength
+        if self.weapon is not None:
+            damage = damage + self.weapon.damage_bonus
+        print(self.name + " attacks " + target.name + " for " + str(damage) + " damage!")
+        target.take_damage(damage)
         """
         Override the parent's display_stats to show additional player info.
         Should show everything the parent shows PLUS player-specific info.
@@ -152,23 +170,29 @@ class Player(Character):
         
 
 class Warrior(Player):
+     def __init__(self, name):
+        Player.__init__(self, name, "Warrior", 120, 15, 5)
+        
     
-
     """
     Warrior class - strong physical fighter.
     Inherits from Player.
     """
     
-    def __init__(self, name):
+def __init__(self, name):
+         Player.__init__(self, name, "Mage", 80, 8, 20)
         """
         Create a warrior with appropriate stats.
         Warriors should have: high health, high strength, low magic
         """
         # TODO: Call super().__init__() with warrior-appropriate stats
         # Suggested stats: health=120, strength=15, magic=5
-        pass
         
-    def attack(self, target):
+        
+def attack(self, target):
+         damage = self.strength + 5
+         print(self.name + " swings at " + target.name + " for " + str(damage) + " damage!")
+         target.take_damage(damage)
         """
         Override the basic attack to make it warrior-specific.
         Warriors should do extra physical damage.
@@ -176,47 +200,59 @@ class Warrior(Player):
         # TODO: Implement warrior attack
         # Should do more damage than basic attack
         # Maybe strength + 5 bonus damage?
-        pass
         
-    def power_strike(self, target):
+        
+def power_strike(self, target):
+        damage = self.strength * 2
+        print(self.name + " uses Power Strike on " + target.name + " for " + str(damage) + " damage!")
+        target.take_damage(damage)
         """
         Special warrior ability - a powerful attack that does extra damage.
         """
         # TODO: Implement power strike
         # Should do significantly more damage than regular attack
-        pass
+        
 
 class Mage(Player):
+    def __init__(self, name):
+        Player.__init__(self, name, "Mage", 80, 8, 20)
     """
     Mage class - magical spellcaster.
     Inherits from Player.
     """
     
     def __init__(self, name):
+         Player.__init__(self, name, "Rogue", 90, 12, 10)
         """
         Create a mage with appropriate stats.
         Mages should have: low health, low strength, high magic
         """
         # TODO: Call super().__init__() with mage-appropriate stats
         # Suggested stats: health=80, strength=8, magic=20
-        pass
+        
         
     def attack(self, target):
+        damage = self.magic
+        print(self.name + " casts a spell at " + target.name + " for " + str(damage) + " damage!")
+        target.take_damage(damage)
         """
         Override the basic attack to make it magic-based.
         Mages should use magic for damage instead of strength.
         """
         # TODO: Implement mage attack
         # Should use self.magic for damage calculation instead of strength
-        pass
+        
         
     def fireball(self, target):
+        damage = self.magic * 2
+        print(self.name + " casts Fireball on " + target.name + " for " + str(damage) + " damage!")
+        target.take_damage(damage)
         """
         Special mage ability - a powerful magical attack.
         """
         # TODO: Implement fireball spell
         # Should do magic-based damage with bonus
-        pass
+        
 
 class Rogue(Player):
     """
@@ -225,15 +261,19 @@ class Rogue(Player):
     """
     
     def __init__(self, name):
+        Player.__init__(self, name, "Rogue", 90, 12, 10)
         """
         Create a rogue with appropriate stats.
         Rogues should have: medium health, medium strength, medium magic
         """
         # TODO: Call super().__init__() with rogue-appropriate stats
         # Suggested stats: health=90, strength=12, magic=10
-        pass
+        
         
     def attack(self, target):
+        damage = self.strength
+        print(self.name + " swiftly strikes " + target.name + " for " + str(damage) + " damage!")
+        target.take_damage(damage)
         """
         Override the basic attack to make it rogue-specific.
         Rogues should have a chance for extra damage (critical hits).
@@ -241,15 +281,18 @@ class Rogue(Player):
         # TODO: Implement rogue attack
         # Could add a chance for critical hit (double damage)
         # Hint: use random.randint(1, 10) and if result <= 3, it's a crit
-        pass
+        
         
     def sneak_attack(self, target):
+        damage = self.strength * 2
+        print(self.name + " performs a Sneak Attack on " + target.name + " for " + str(damage) + " damage!")
+        target.take_damage(damage)
         """
         Special rogue ability - guaranteed critical hit.
         """
         # TODO: Implement sneak attack
         # Should always do critical damage
-        pass
+        
 
 class Weapon:
     """
@@ -258,18 +301,21 @@ class Weapon:
     """
     
     def __init__(self, name, damage_bonus):
+        self.name = name
+        self.damage_bonus = damage_bonus
         """
         Create a weapon with a name and damage bonus.
         """
         # TODO: Store weapon name and damage bonus
-        pass
+        
         
     def display_info(self):
+        print("Weapon:", self.name, "(+" + str(self.damage_bonus) + " Damage Bonus)")
         """
         Display information about this weapon.
         """
         # TODO: Print weapon name and damage bonus
-        pass
+        
 
 # ============================================================================
 # MAIN PROGRAM FOR TESTING (YOU CAN MODIFY THIS FOR TESTING)
