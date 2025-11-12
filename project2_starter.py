@@ -171,9 +171,6 @@ class Warrior(Player):
     Warrior class - strong physical fighter.
     Inherits from Player.
     """
-    
-def __init__(self, name):
-         Player.__init__(self, name, "Mage", 80, 8, 20)
 """
         Create a warrior with appropriate stats.
         Warriors should have: high health, high strength, low magic
@@ -213,9 +210,6 @@ class Mage(Player):
     Mage class - magical spellcaster.
     Inherits from Player.
     """
-    
-    def __init__(self, name):
-         Player.__init__(self, name, "Rogue", 90, 12, 10)
     """
         Create a mage with appropriate stats.
         Mages should have: low health, low strength, high magic
