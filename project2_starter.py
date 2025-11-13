@@ -57,12 +57,15 @@ class SimpleBattle:
 # ============================================================================
 
 class Character:
+    # Base class that defines the shared structure and behavior for all characters.
+    # Every subclass will inherit from this one.
     """
     Base class for all characters.
     This is the top of our inheritance hierarchy.
     """
     
     def __init__(self, name, health, strength, magic):
+         # Basic setup for a character’s name, health, and combat stats
         self.name = name
         self.health = health
         self.strength = strength
@@ -72,6 +75,7 @@ class Character:
         
         
     def attack(self, target):
+        # Standard attack that simply uses the strength stat for damage
         damage = self.strength
         print(self.name + " attacks " + target.name + " for " + str(damage) + " damage!")
         target.take_damage(damage)
@@ -85,6 +89,7 @@ class Character:
        
         
     def take_damage(self, damage):
+         # Subtract health and make sure it doesn’t drop below zero
         self.health = self.health - damage
         if self.health < 0:
             self.health = 0
@@ -97,6 +102,7 @@ class Character:
         
         
     def display_stats(self):
+        # Prints current stats for quick debugging or battle output
         print("Name:", self.name)
         print("Health:", self.health)
         print("Strength:", self.strength)
@@ -108,12 +114,15 @@ class Character:
         
 
 class Player(Character):
+    # Extension of Character that adds leveling, experience, and weapon support.
+    # Used as a parent for specific player archetypes (Warrior, Mage, Rogue).
     def __init__(self, name, character_class, health, strength, magic):
+        # Initialize inherited attributes first, then add player-specific fields
         Character.__init__(self, name, health, strength, magic)
         self.character_class = character_class
         self.level = 1
         self.experience = 0
-        self.weapon = None
+        self.weapon = None # Starts unarmed until a weapon is equipped
     """
     Base class for player characters.
     Inherits from Character and adds player-specific features.
@@ -126,21 +135,26 @@ class Player(Character):
        
         
     def display_stats(self):
+        # Adds player-specific info like class, level, and weapon to the base stats
         print("=== " + self.character_class + " ===")
         Character.display_stats(self)
         print("Level:", self.level)
         print("Experience:", self.experience)
+
+        # If a weapon is equipped, show it, otherwise indicate unarmed status
         if self.weapon is not None:
             print("Equipped Weapon:", self.weapon.name, "(+" + str(self.weapon.damage_bonus) + ")")
         else:
             print("No weapon equipped.")
 
     def equip_weapon(self, weapon):
+        # Assign a weapon to the player and confirm the change
         """Equip a weapon."""
         self.weapon = weapon
         print(self.name + " equipped " + weapon.name + "!")
         
     def attack(self, target):
+        # Attack calculation that includes any weapon bonus
         """Attack that includes weapon bonus if equipped."""
         damage = self.strength
         if self.weapon is not None:
@@ -155,15 +169,20 @@ class Player(Character):
         
 
 class Warrior(Player):
+    # Heavy fighter that specializes in physical attacks.
+    # Trades magic ability for raw power and endurance.
     def __init__(self, name):
+        # Set Warrior’s default stats (high HP, high strength, low magic)
         Player.__init__(self, name, "Warrior", 120, 15, 5)
 
     def attack(self, target):
+        # Slightly stronger than the normal player attack
         damage = self.strength + 5
         print(self.name + " swings at " + target.name + " for " + str(damage) + " damage!")
         target.take_damage(damage)
 
     def power_strike(self, target):
+        # A signature Warrior move that doubles their strength for one hit
         damage = self.strength * 2
         print(self.name + " uses Power Strike on " + target.name + " for " + str(damage) + " damage!")
         target.take_damage(damage)
@@ -194,6 +213,7 @@ class Warrior(Player):
         
 
 class Mage(Player):
+    # A fragile but powerful magic user who focuses on spell attacks.
     
     """
     Mage class - magical spellcaster.
@@ -206,9 +226,11 @@ class Mage(Player):
         
 
     def __init__(self, name):
+        # Mages have lower HP and strength but excel in magic
         Player.__init__(self, name, "Mage", 80, 8, 20)     
         
     def attack(self, target):
+         # Replace physical damage with magic-based attacks
         damage = self.magic
         print(self.name + " casts a spell at " + target.name + " for " + str(damage) + " damage!")
         target.take_damage(damage)
@@ -220,6 +242,7 @@ class Mage(Player):
         
         
     def fireball(self, target):
+        # Stronger version of the attack, doubles the magic output
         damage = self.magic * 2
         print(self.name + " casts Fireball on " + target.name + " for " + str(damage) + " damage!")
         target.take_damage(damage)
@@ -230,12 +253,14 @@ class Mage(Player):
         
 
 class Rogue(Player):
+    # Crafty and agile fighter who relies on speed and precision.
     """
     Rogue class - quick and sneaky fighter.
     Inherits from Player.
     """
     
     def __init__(self, name):
+        # Rogues have moderate stats
         Player.__init__(self, name, "Rogue", 90, 12, 10)
         """
         Create a rogue with appropriate stats.
@@ -245,6 +270,7 @@ class Rogue(Player):
         
         
     def attack(self, target):
+        # Standard quick attack, doesn’t hit as hard as a warrior’s swing
         damage = self.strength
         print(self.name + " swiftly strikes " + target.name + " for " + str(damage) + " damage!")
         target.take_damage(damage)
@@ -256,6 +282,7 @@ class Rogue(Player):
         
         
     def sneak_attack(self, target):
+        # A hard hit thats double the normal damage
         damage = self.strength * 2
         print(self.name + " performs a Sneak Attack on " + target.name + " for " + str(damage) + " damage!")
         target.take_damage(damage)
@@ -266,12 +293,14 @@ class Rogue(Player):
         
 
 class Weapon:
+    # Represents a piece of equipment that increases attack power.
     """
     Weapon class to demonstrate composition.
     Characters can HAVE weapons (composition, not inheritance).
     """
     
     def __init__(self, name, damage_bonus):
+         # Save weapon name and its damage boost value
         self.name = name
         self.damage_bonus = damage_bonus
         """
@@ -281,6 +310,7 @@ class Weapon:
         
         
     def display_info(self):
+        # Output weapon stats for the player or debugging
         print("Weapon:", self.name, "(+" + str(self.damage_bonus) + " Damage Bonus)")
         """
         Display information about this weapon.
